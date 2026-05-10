@@ -63,6 +63,12 @@ _cb_key_down(void *data __UNUSED__, Evas *e __UNUSED__, Evas_Object *obj __UNUSE
    /* CTRL S: save to file */
    if (!strcmp(ev->key, "s") && evas_key_modifier_is_set(ev->modifiers, "Control"))
      _win_save_cb(NULL, NULL);
+   /* CTRL U: upload file */
+   if (!strcmp(ev->key, "u") && evas_key_modifier_is_set(ev->modifiers, "Control"))
+     _win_share_cb(NULL, NULL);
+   /* CTRL D: set delay */
+   if (!strcmp(ev->key, "d") && evas_key_modifier_is_set(ev->modifiers, "Control"))
+     _win_delay_cb(NULL, NULL);
 }
 
 void
@@ -114,17 +120,22 @@ preview_dialog_show(E_Zone *zone, E_Border *bd, const char *params, void *dst,
    elm_object_part_content_set(o_bg, "e.swallow.buttons", o);
 
    o = e_widget_button_add(evas, _("Save"), NULL, _win_save_cb, win, NULL);
+   elm_object_tooltip_text_set(o, "CTRL S");
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Share"), NULL, _win_share_cb, win, NULL);
+   elm_object_tooltip_text_set(o, "CTRL U");
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    o = e_widget_button_add(evas, _("Copy"), NULL, _win_copy_cb, win, NULL);
+   elm_object_tooltip_text_set(o, "CTRL C");
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
    if (!bd)
      {
         o = e_widget_button_add(evas, _("Delay"), NULL, _win_delay_cb, win, NULL);
+        elm_object_tooltip_text_set(o, "CTRL D");
         e_widget_list_object_append(o_box, o, 1, 0, 0.5);
      }
    o = e_widget_button_add(evas, _("Cancel"), NULL, _win_cancel_cb, win, NULL);
+   elm_object_tooltip_text_set(o, "ESC");
    e_widget_list_object_append(o_box, o, 1, 0, 0.5);
 
    o = o_box;
